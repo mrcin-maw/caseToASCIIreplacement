@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>caseToASCIIreplacement — Analiza projektowo-wdrożeniowa</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.45; color: #1a1a1a; }
+    header, main, footer { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav { background: #f4f6f8; border-bottom: 1px solid #d9dee3; }
+    nav a { margin-right: 14px; text-decoration: none; color: #0b57d0; font-weight: 600; }
+    h1, h2, h3 { margin-top: 1.2em; }
+    .card { border: 1px solid #d9dee3; border-radius: 8px; padding: 12px; margin: 10px 0; background: #fff; }
+    code { background: #f1f3f5; padding: 2px 5px; border-radius: 4px; }
+    ul { margin-top: 0.4em; }
+  </style>
+</head>
+<body>
+  <nav>
+    <header>
+      <a href="index.html">Start</a>
+      <a href="modules.html">Moduły</a>
+      <a href="roadmap.html">Roadmapa</a>
+      <a href="gaps_and_risks.html">Luki i ryzyka</a>
+      <a href="integration_with_ai_conversations.html">Integracja z AI_conversations</a>
+      <a href="sources.html">Indeks źródeł</a>
+    </header>
+  </nav>
+
+  <main>
+    <h1>caseToASCIIreplacement — analiza projektowo-wdrożeniowa</h1>
+    <p>Dokument odtwarza wiedzę projektową i wdrożeniową repozytorium <strong>mrcin-maw/caseToASCIIreplacement</strong> w układzie gotowym do przeniesienia do wiki wielostronicowej.</p>
+
+    <h2>1) Opis projektu (cel, zakres, dojrzałość)</h2>
+    <div class="card">
+      <h3>Cel</h3>
+      <p>Celem projektu jest transliteracja znaków narodowych do ASCII oraz opcjonalna normalizacja znaków specjalnych i separatorów w łańcuchach tekstowych poprzez funkcję PowerShell <code>replace-Cases</code>.<br>
+      Źródła: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L1-L27">README.md#L1-L27</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L25-L174">caseToASCIIreplacement.ps1#L25-L174</a>.</p>
+
+      <h3>Zakres</h3>
+      <ul>
+        <li>Obsługa dwóch trybów mapowania: znaki narodowe i znaki specjalne (przełącznik <code>-replaceSpecialChars</code>).</li>
+        <li>Opcjonalne zachowanie spacji (<code>-dontTouchSpaces</code>).</li>
+        <li>Trymowanie nadmiarowych separatorów z możliwością definiowania tablicy separatorów (<code>-trim</code>, <code>-trimSeparators</code>).</li>
+      </ul>
+      <p>Źródła: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L10-L24">README.md#L10-L24</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L25-L170">caseToASCIIreplacement.ps1#L25-L170</a>.</p>
+
+      <h3>Dojrzałość</h3>
+      <p>Projekt ma charakter użytecznego narzędzia skryptowego (wersja opisana jako 1.6), z działającą logiką i danymi mapowań, lecz bez widocznego pakietu testów automatycznych, CI ani metadanych wydaniowych.<br>
+      Źródła: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L4-L50">README.md#L4-L50</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L3-L5">caseToASCIIreplacement.ps1#L3-L5</a>, <a href="sources.html">Indeks źródeł (inwentaryzacja)</a>.</p>
+    </div>
+
+    <h2>2) Architektura logiczna (skrót)</h2>
+    <div class="card">
+      <ul>
+        <li>Warstwa wykonawcza: funkcja <code>replace-Cases</code>.</li>
+        <li>Warstwa danych: <code>casedata.csv</code> i <code>specialcharsdata.csv</code>.</li>
+        <li>Warstwa ładowania: funkcja <code>load-replacementData</code> z cache w pamięci procesu.</li>
+      </ul>
+      <p>Pełny opis: <a href="modules.html">modules.html</a>.</p>
+    </div>
+
+    <h2>3) Odzyskana wiedza (skrót)</h2>
+    <div class="card">
+      <ul>
+        <li>Skrypt używa tablic haszujących jako słowników mapowań znak→zamiennik.</li>
+        <li>Ładowanie tabel jest leniwe i odświeżalne przełącznikiem <code>-reloadTable</code>.</li>
+        <li>Trymowanie realizuje dwa kroki: obcięcie brzegów oraz deduplikację separatorów wewnątrz.</li>
+      </ul>
+      <p>Pełny rejestr twierdzeń: <a href="sources.html">sources.html</a>.</p>
+    </div>
+
+    <h2>4) Roadmapa wdrożeniowa</h2>
+    <div class="card">
+      <p>Szczegółowe etapy, priorytety, ryzyka i kryteria ukończenia: <a href="roadmap.html">roadmap.html</a>.</p>
+    </div>
+
+    <h2>5) Plan techniczny (stabilizacja/refaktoryzacja/dokumentacja)</h2>
+    <div class="card">
+      <ul>
+        <li>Stabilizacja: kontrakty wejścia/wyjścia, testy regresji mapowań, walidacja plików danych.</li>
+        <li>Refaktoryzacja: rozdzielenie logiki transliteracji i trymowania, modułowość PS1/PSM1.</li>
+        <li>Dokumentacja: katalog scenariuszy użycia i polityka wersjonowania tabel znaków.</li>
+      </ul>
+      <p>Rozbicie działań: <a href="roadmap.html">roadmap.html</a> i <a href="gaps_and_risks.html">gaps_and_risks.html</a>.</p>
+    </div>
+
+    <h2>6) Luki i niejednoznaczności</h2>
+    <div class="card">
+      <p>Zidentyfikowane luki oraz plan ich domknięcia: <a href="gaps_and_risks.html">gaps_and_risks.html</a>.</p>
+      <p>Porównanie z repozytorium AI_conversations: <a href="integration_with_ai_conversations.html">integration_with_ai_conversations.html</a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>Wygenerowano dla repo: <code>mrcin-maw/caseToASCIIreplacement</code>.</p>
+  </footer>
+</body>
+</html>
