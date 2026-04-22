@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integracja z AI_conversations — caseToASCIIreplacement</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.45; }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav { background: #f4f6f8; border-bottom: 1px solid #d9dee3; }
+    nav a { margin-right: 14px; text-decoration: none; color: #0b57d0; font-weight: 600; }
+    .box { border: 1px solid #d9dee3; border-radius: 8px; padding: 12px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <header>
+      <a href="index.html">Start</a>
+      <a href="modules.html">Moduły</a>
+      <a href="roadmap.html">Roadmapa</a>
+      <a href="gaps_and_risks.html">Luki i ryzyka</a>
+      <a href="integration_with_ai_conversations.html">Integracja z AI_conversations</a>
+      <a href="sources.html">Indeks źródeł</a>
+    </header>
+  </nav>
+  <main>
+    <h1>Porównanie z mrcin-maw/AI_conversations</h1>
+
+    <div class="box">
+      <h3>Stan źródeł porównawczych</h3>
+      <p>W analizowanym repozytorium nie występują odwołania do <code>AI_conversations</code>, a bezpośredni odczyt repozytorium referencyjnego był niedostępny w aktualnym środowisku (odpowiedź 404 z API), więc porównanie ma charakter inferencyjny i powinno zostać domknięte po uzyskaniu dostępu.</p>
+      <p><strong>Źródła:</strong> brak dopasowań frazy w repo (skan treści), oraz brak danych z API dla repo referencyjnego.</p>
+    </div>
+
+    <div class="box">
+      <h3>Zgodności (inferencja robocza)</h3>
+      <ul>
+        <li>Obszar wspólny potencjalnie dotyczy przygotowania danych tekstowych pod dalsze przetwarzanie.</li>
+        <li>caseToASCIIreplacement może pełnić rolę etapu pre-processingu tekstu wejściowego.</li>
+      </ul>
+      <p><strong>Źródła bazowe:</strong> <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L1-L2">README#L1-L2</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L13-L24">README#L13-L24</a>.</p>
+    </div>
+
+    <div class="box">
+      <h3>Rozbieżności i brakujące tematy</h3>
+      <ul>
+        <li>Brak formalnego kontraktu integracyjnego (API wej./wyj., profile transformacji, metadane jakości).</li>
+        <li>Brak mechanizmu śledzenia wersji reguł transliteracji względem konsumentów.</li>
+        <li>Brak mapowania scenariuszy biznesowych między repozytoriami.</li>
+      </ul>
+      <p><strong>Źródła:</strong> brak takich artefaktów w obecnym repo (<a href="sources.html">inwentaryzacja źródeł</a>).</p>
+    </div>
+
+    <div class="box">
+      <h3>Rekomendacje scalenia</h3>
+      <ol>
+        <li>Ustalić wspólny kontrakt danych tekstowych (wejście, wyjście, kodowanie, polityki separatorów).</li>
+        <li>Wprowadzić profile transformacji (np. „slug”, „display-safe”, „strict-ascii”).</li>
+        <li>Powiązać testy integracyjne międzyrepozytoryjne z wersjami tabel CSV.</li>
+        <li>Po uzyskaniu dostępu do AI_conversations uzupełnić tabelę zgodności 1:1 (temat → artefakt → właściciel).</li>
+      </ol>
+    </div>
+
+    <div class="box">
+      <h3>Gotowość do przeniesienia do Visions_n_paths</h3>
+      <p>Wszystkie strony wiki używają względnych linków między sobą oraz stałych linków GitHub do źródeł, co pozwala przenieść folder <code>wiki</code> bez utraty nawigacji i odniesień źródłowych.</p>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indeks źródeł — caseToASCIIreplacement</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.45; }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav { background: #f4f6f8; border-bottom: 1px solid #d9dee3; }
+    nav a { margin-right: 14px; text-decoration: none; color: #0b57d0; font-weight: 600; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #d9dee3; padding: 8px; vertical-align: top; }
+    th { background: #f8fafc; }
+  </style>
+</head>
+<body>
+  <nav>
+    <header>
+      <a href="index.html">Start</a>
+      <a href="modules.html">Moduły</a>
+      <a href="roadmap.html">Roadmapa</a>
+      <a href="gaps_and_risks.html">Luki i ryzyka</a>
+      <a href="integration_with_ai_conversations.html">Integracja z AI_conversations</a>
+      <a href="sources.html">Indeks źródeł</a>
+    </header>
+  </nav>
+  <main>
+    <h1>Odzyskana wiedza i indeks źródeł</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Twierdzenie</th>
+          <th>Źródło</th>
+          <th>Uwagi wdrożeniowe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Projekt dostarcza funkcję transliteracji i normalizacji tekstu opartą o PowerShell.</td>
+          <td><a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L1-L2">README#L1-L2</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L25-L32">PS1#L25-L32</a></td>
+          <td>Punkt wejścia projektu jest pojedynczą funkcją i to ona stanowi API.</td>
+        </tr>
+        <tr>
+          <td>Tryb mapowania znaków specjalnych jest opcjonalny i przełączany parametrem.</td>
+          <td><a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L13-L16">README#L13-L16</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L50-L57">PS1#L50-L57</a></td>
+          <td>Można budować profile użycia (slug/SEO/sanitizacja) na bazie jednego rdzenia.</td>
+        </tr>
+        <tr>
+          <td>Dane mapowań są utrzymywane poza kodem jako pliki CSV i ładowane do słowników haszujących.</td>
+          <td><a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L22-L23">PS1#L22-L23</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L183-L212">PS1#L183-L212</a></td>
+          <td>Rozdzielenie logiki i danych ułatwia utrzymanie, ale wymaga kontroli jakości danych.</td>
+        </tr>
+        <tr>
+          <td>Trymowanie separatorów ma logikę: obcięcie brzegów + redukcja sekwencji separatorów.</td>
+          <td><a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L99-L170">PS1#L99-L170</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L18-L24">README#L18-L24</a></td>
+          <td>Ten fragment jest kandydatem do izolacji i testów jednostkowych.</td>
+        </tr>
+        <tr>
+          <td>Repozytorium nie zawiera dodatkowych podprojektów/budowania/CI w widocznej strukturze głównej.</td>
+          <td><a href="https://github.com/mrcin-maw/caseToASCIIreplacement/tree/main">Struktura repo</a></td>
+          <td>Wdrożenie produkcyjne wymaga doprojektowania procesu jakości i wersjonowania.</td>
+        </tr>
+        <tr>
+          <td>Dokumentacja zawiera przykłady zachowania funkcji na wejściach testowych.</td>
+          <td><a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L29-L51">README#L29-L51</a></td>
+          <td>Przykłady można przepisać jako testy akceptacyjne.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Inwentaryzacja plików wymaganych rozszerzeń</h2>
+    <ul>
+      <li><code>*.md</code>: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md">README.md</a></li>
+      <li><code>*.txt, *.text, *.info, *.inf, *.doc, *.docx, *.xls, *.xlsx</code>: nie znaleziono w repozytorium.</li>
+      <li><code>*.ps1</code>: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1">caseToASCIIreplacement.ps1</a> (uwzględniono komentarze projektowe).</li>
+      <li><code>*.pas</code>: nie znaleziono.</li>
+    </ul>
+
+    <h2>Podgląd źródła (graficzne/binarnne)</h2>
+    <p>W analizowanym repozytorium nie wykryto plików graficznych ani binarnych wymagających osobnego podglądu źródła.</p>
+  </main>
+</body>
+</html>

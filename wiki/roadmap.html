@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmapa wdrożeniowa — caseToASCIIreplacement</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.45; }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav { background: #f4f6f8; border-bottom: 1px solid #d9dee3; }
+    nav a { margin-right: 14px; text-decoration: none; color: #0b57d0; font-weight: 600; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #d9dee3; padding: 8px; vertical-align: top; }
+    th { background: #f8fafc; }
+  </style>
+</head>
+<body>
+  <nav>
+    <header>
+      <a href="index.html">Start</a>
+      <a href="modules.html">Moduły</a>
+      <a href="roadmap.html">Roadmapa</a>
+      <a href="gaps_and_risks.html">Luki i ryzyka</a>
+      <a href="integration_with_ai_conversations.html">Integracja z AI_conversations</a>
+      <a href="sources.html">Indeks źródeł</a>
+    </header>
+  </nav>
+  <main>
+    <h1>Roadmapa wdrożeniowa</h1>
+    <p>Priorytety wynikają z aktualnej struktury jednoskryptowej, zależności od tabel CSV i braku jawnego pakietu testowego/CI.<br>
+    Źródła: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1">PS1</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md">README</a>.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Etap</th>
+          <th>Priorytet</th>
+          <th>Zakres</th>
+          <th>Ryzyka</th>
+          <th>Kryteria ukończenia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>E1. Stabilizacja wejścia/wyjścia</td>
+          <td>Wysoki</td>
+          <td>Formalizacja kontraktów parametrów, scenariusze graniczne (null/pusty string, nietypowe separatory, brak pliku danych).</td>
+          <td>Niedookreślone zachowanie przy brakach danych wejściowych i uszkodzonych tabelach.</td>
+          <td>Opisane kontrakty, zestaw testów regresji obejmujący kluczowe ścieżki i błędy I/O.</td>
+        </tr>
+        <tr>
+          <td>E2. Uporządkowanie warstwy danych</td>
+          <td>Wysoki</td>
+          <td>Wersjonowanie i walidacja <code>casedata.csv</code>/<code>specialcharsdata.csv</code>, klasyfikacja reguł zamian.</td>
+          <td>Dryf jakości danych i niejawne zmiany wyników transliteracji.</td>
+          <td>Validator schematu danych + changelog mapowań + testy różnicowe tabel.</td>
+        </tr>
+        <tr>
+          <td>E3. Refaktoryzacja do modułu dystrybuowalnego</td>
+          <td>Średni</td>
+          <td>Wydzielenie logiki do PSM1, standaryzacja API i obsługi błędów.</td>
+          <td>Zmiana interfejsu może naruszyć kompatybilność skryptów korzystających z obecnej funkcji.</td>
+          <td>Wersja modułu z zachowaniem kompatybilności lub planem migracji.</td>
+        </tr>
+        <tr>
+          <td>E4. Automatyzacja jakości i wydania</td>
+          <td>Średni</td>
+          <td>Dodanie pipeline CI (testy + lint + kontrola danych), publikacja wersji.</td>
+          <td>Brak automatycznej kontroli regresji przy kolejnych zmianach.</td>
+          <td>Powtarzalny pipeline i procedura release.</td>
+        </tr>
+        <tr>
+          <td>E5. Integracja wiedzy międzyrepozytoryjnej</td>
+          <td>Średni</td>
+          <td>Mapowanie tematów do AI_conversations i docelowe przeniesienie do Visions_n_paths.</td>
+          <td>Niedostępność materiału referencyjnego AI_conversations utrudnia pełne porównanie.</td>
+          <td>Uzupełniona matryca zgodności/rozbieżności i backlog tematów scaleniowych.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Plan techniczny (stabilizacja/refaktoryzacja/dokumentacja)</h2>
+    <ul>
+      <li><strong>Stabilizacja:</strong> testy kontraktowe funkcji, testy tabel danych, jawna obsługa błędów odczytu plików.</li>
+      <li><strong>Refaktoryzacja:</strong> rozdzielenie logiki transliteracji i trymowania oraz enkapsulacja loadera danych.</li>
+      <li><strong>Dokumentacja:</strong> specyfikacja parametrów i profili zamian, przewodnik migracji wersji danych.</li>
+    </ul>
+  </main>
+</body>
+</html>

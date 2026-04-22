@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moduły — caseToASCIIreplacement</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.45; }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav { background: #f4f6f8; border-bottom: 1px solid #d9dee3; }
+    nav a { margin-right: 14px; text-decoration: none; color: #0b57d0; font-weight: 600; }
+    section { border: 1px solid #d9dee3; border-radius: 8px; padding: 12px; margin: 14px 0; }
+    h3 { margin-top: 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <header>
+      <a href="index.html">Start</a>
+      <a href="modules.html">Moduły</a>
+      <a href="roadmap.html">Roadmapa</a>
+      <a href="gaps_and_risks.html">Luki i ryzyka</a>
+      <a href="integration_with_ai_conversations.html">Integracja z AI_conversations</a>
+      <a href="sources.html">Indeks źródeł</a>
+    </header>
+  </nav>
+  <main>
+    <h1>Architektura logiczna i moduły</h1>
+
+    <section>
+      <h3>Moduł A: Rdzeń transliteracji (PowerShell)</h3>
+      <p><strong>Cel:</strong> mapowanie znaków wejściowych na odpowiedniki ASCII lub wzorce specjalne, z opcjonalnym trymowaniem separatorów.</p>
+      <p><strong>Zakres:</strong> funkcje <code>replace-Cases</code> i <code>load-replacementData</code>; parametry sterujące trybem działania i ładowaniem danych.</p>
+      <p><strong>Status:</strong> funkcjonalny skrypt jednoplikiowy, wersja 1.6, bez wydzielonego pakietu modułu i testów automatycznych.</p>
+      <p><strong>Zależności:</strong> pliki danych TSV (<code>casedata.csv</code>, <code>specialcharsdata.csv</code>) oraz środowisko PowerShell.</p>
+      <p><strong>Artefakty:</strong> <code>caseToASCIIreplacement.ps1</code>.</p>
+      <p><strong>Ryzyka:</strong> brak walidacji kompletności tabel przed użyciem; możliwe odchylenia działania przy nietypowych separatorach i danych pustych.</p>
+      <p><strong>Kroki wdrożeniowe:</strong> (1) opakować jako moduł PSM1; (2) dodać testy kontraktowe parametrów; (3) dodać walidację i obsługę błędów I/O.</p>
+      <p><strong>Źródła:</strong> <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L25-L174">PS1#L25-L174</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L176-L214">PS1#L176-L214</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L10-L27">README#L10-L27</a>.</p>
+    </section>
+
+    <section>
+      <h3>Moduł B: Słownik znaków narodowych</h3>
+      <p><strong>Cel:</strong> transliteracja diakrytyków i rozszerzonych znaków łacińskich do reprezentacji ASCII.</p>
+      <p><strong>Zakres:</strong> kolumny <code>CaseLetter</code>, <code>ALTCode</code>, <code>LetterReplacement</code> i mapowanie 1-znakowe wejście → zamiennik tekstowy.</p>
+      <p><strong>Status:</strong> rozbudowana tabela danych, wykorzystywana runtime przez rdzeń.</p>
+      <p><strong>Zależności:</strong> parser w <code>load-replacementData</code>, kodowanie UTF-8.</p>
+      <p><strong>Artefakty:</strong> <code>casedata.csv</code>.</p>
+      <p><strong>Ryzyka:</strong> brak jawnego schematu/wersjonowania tabeli; potencjalna niespójność jakości zamienników wieloliterowych.</p>
+      <p><strong>Kroki wdrożeniowe:</strong> (1) dodać walidator struktury CSV; (2) wprowadzić wersję danych; (3) dodać testy regresji mapowań krytycznych językowo.</p>
+      <p><strong>Źródła:</strong> <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/casedata.csv#L1-L20">casedata.csv#L1-L20</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L181-L195">PS1#L181-L195</a>.</p>
+    </section>
+
+    <section>
+      <h3>Moduł C: Słownik znaków specjalnych</h3>
+      <p><strong>Cel:</strong> normalizacja i sanitizacja znaków specjalnych (np. zastępowanie spacją/łącznikiem/etykietą).</p>
+      <p><strong>Zakres:</strong> mapa znak specjalny → reprezentacja docelowa, aktywowana przełącznikiem <code>-replaceSpecialChars</code>.</p>
+      <p><strong>Status:</strong> tabela krótka, pragmatyczna, zorientowana na scenariusze czyszczenia tekstu.</p>
+      <p><strong>Zależności:</strong> loader danych i mechanizm wyboru tabeli w rdzeniu.</p>
+      <p><strong>Artefakty:</strong> <code>specialcharsdata.csv</code>.</p>
+      <p><strong>Ryzyka:</strong> niejednoznaczność semantyczna niektórych zamian (np. usunięcie kropek/przecinków).</p>
+      <p><strong>Kroki wdrożeniowe:</strong> (1) sklasyfikować reguły wg polityk (SEO, slug, bezpieczeństwo, czytelność); (2) dodać profile konfiguracyjne.</p>
+      <p><strong>Źródła:</strong> <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/specialcharsdata.csv#L1-L13">specialcharsdata.csv#L1-L13</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L50-L57">PS1#L50-L57</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L197-L212">PS1#L197-L212</a>.</p>
+    </section>
+
+    <section>
+      <h3>Moduł D: Interfejs użytkownika i dokumentacja użycia</h3>
+      <p><strong>Cel:</strong> przekazanie sposobu użycia i oczekiwanych efektów na przykładach.</p>
+      <p><strong>Zakres:</strong> README (opis opcji, przykłady wejście/wyjście), komentarz nagłówkowy w PS1.</p>
+      <p><strong>Status:</strong> dokumentacja użytkowa istnieje, ale brakuje sekcji architektonicznej i wdrożeniowej.</p>
+      <p><strong>Zależności:</strong> zgodność dokumentacji z realnym działaniem funkcji.</p>
+      <p><strong>Artefakty:</strong> <code>README.md</code>, nagłówki komentarzy w <code>caseToASCIIreplacement.ps1</code>.</p>
+      <p><strong>Ryzyka:</strong> dryf dokumentacji względem implementacji i danych CSV.</p>
+      <p><strong>Kroki wdrożeniowe:</strong> (1) doprecyzować kontrakty parametrów; (2) dodać matrycę przypadków brzegowych; (3) utrzymywać changelog semantyczny.</p>
+      <p><strong>Źródła:</strong> <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L10-L51">README#L10-L51</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L3-L17">PS1#L3-L17</a>.</p>
+    </section>
+
+    <section>
+      <h2>Przepływ logiczny</h2>
+      <ol>
+        <li>Wywołanie <code>replace-Cases</code> z parametrami.</li>
+        <li>Leniwe ładowanie tabel (lub przeładowanie przy <code>-reloadTable</code>).</li>
+        <li>Wybór aktywnej tabeli (diakrytyki vs znaki specjalne).</li>
+        <li>Iteracja po znakach i podstawienie zamienników.</li>
+        <li>Opcjonalne trymowanie separatorów (brzegi + deduplikacja sekwencji).</li>
+        <li>Zwrócenie finalnego łańcucha.</li>
+      </ol>
+      <p>Źródło: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L34-L174">PS1#L34-L174</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

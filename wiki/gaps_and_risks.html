@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luki i ryzyka — caseToASCIIreplacement</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; line-height: 1.45; }
+    header, main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav { background: #f4f6f8; border-bottom: 1px solid #d9dee3; }
+    nav a { margin-right: 14px; text-decoration: none; color: #0b57d0; font-weight: 600; }
+    .risk { border: 1px solid #d9dee3; border-radius: 8px; padding: 12px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <header>
+      <a href="index.html">Start</a>
+      <a href="modules.html">Moduły</a>
+      <a href="roadmap.html">Roadmapa</a>
+      <a href="gaps_and_risks.html">Luki i ryzyka</a>
+      <a href="integration_with_ai_conversations.html">Integracja z AI_conversations</a>
+      <a href="sources.html">Indeks źródeł</a>
+    </header>
+  </nav>
+  <main>
+    <h1>Luki, niejednoznaczności i plan domknięcia</h1>
+
+    <div class="risk">
+      <h3>Luka 1: Brak testów automatycznych</h3>
+      <p><strong>Wpływ:</strong> wysoki (ryzyko regresji logiki zamian i trymowania).</p>
+      <p><strong>Źródła:</strong> brak plików testowych w strukturze repo, logika krytyczna w <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L74-L170">PS1#L74-L170</a>.</p>
+      <p><strong>Plan domknięcia:</strong> zbudować testy regresji na bazie przykładów README i przypadków brzegowych separatorów.</p>
+    </div>
+
+    <div class="risk">
+      <h3>Luka 2: Brak formalnej walidacji danych CSV</h3>
+      <p><strong>Wpływ:</strong> wysoki (ryzyko cichej degradacji wyników transliteracji).</p>
+      <p><strong>Źródła:</strong> odczyt plików i parsowanie tabulatorem bez walidatora: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L183-L212">PS1#L183-L212</a>.</p>
+      <p><strong>Plan domknięcia:</strong> dodać kontrolę schematu i test spójności mapowania znaków kluczowych.</p>
+    </div>
+
+    <div class="risk">
+      <h3>Luka 3: Brak jawnego modelu wersjonowania i wydania</h3>
+      <p><strong>Wpływ:</strong> średni/wysoki (utrudniona kontrola zmian w regułach).</p>
+      <p><strong>Źródła:</strong> informacja o wersji w komentarzu i README bez procesu release: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/README.md#L4-L8">README#L4-L8</a>, <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L3-L5">PS1#L3-L5</a>.</p>
+      <p><strong>Plan domknięcia:</strong> wprowadzić semantyczny changelog + tagowanie wersji danych i skryptu.</p>
+    </div>
+
+    <div class="risk">
+      <h3>Luka 4: Niejednoznaczna polityka mapowań znaków specjalnych</h3>
+      <p><strong>Wpływ:</strong> średni (różne potrzeby domenowe: slug, SEO, bezpieczeństwo, czytelność).</p>
+      <p><strong>Źródła:</strong> skrócona tabela reguł: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/specialcharsdata.csv#L1-L13">specialcharsdata.csv#L1-L13</a>.</p>
+      <p><strong>Plan domknięcia:</strong> wydzielić profile reguł i opisać ich przeznaczenie w dokumentacji.</p>
+    </div>
+
+    <div class="risk">
+      <h3>Luka 5: Ograniczona obserwowalność błędów</h3>
+      <p><strong>Wpływ:</strong> średni (trudność diagnostyki w integracjach automatycznych).</p>
+      <p><strong>Źródła:</strong> brak dedykowanych ścieżek obsługi błędów i logowania w funkcji głównej: <a href="https://github.com/mrcin-maw/caseToASCIIreplacement/blob/main/caseToASCIIreplacement.ps1#L25-L174">PS1#L25-L174</a>.</p>
+      <p><strong>Plan domknięcia:</strong> dodać czytelne komunikaty błędów i tryb diagnostyczny.</p>
+    </div>
+
+    <h2>Ryzyka wdrożeniowe (zagregowane)</h2>
+    <ul>
+      <li>Regresja transliteracji po modyfikacji CSV.</li>
+      <li>Niekompatybilność zachowania po refaktoryzacji bez warstwy testów.</li>
+      <li>Niespójność dokumentacji z implementacją przy kolejnych wersjach.</li>
+    </ul>
+  </main>
+</body>
+</html>
